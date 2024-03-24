@@ -1,0 +1,157 @@
+@mixin media($size: 0, $type: min-width, $orientation: false) {
+    @if type-of($size) == "number" {
+        @if type-of($orientation) == "bool" {
+            @media screen and ($type: #{$size + px}) {
+                @content;
+            }
+        } @else {
+            @media screen and ($type: #{$size + px}) and (orientation: $orientation) {
+                @content;
+            }
+        }
+    }
+    @if type-of($size) == "string" {
+        @media screen and #{$size} {
+            @content;
+        }
+    }
+}
+
+@mixin font-tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    -webkit-font-feature-settings: "tnum";
+    -moz-font-feature-settings: "tnum";
+}
+
+@mixin font-mask($background-image: none) {
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        background-image: $background-image;
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@mixin link {
+    &,
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin link-h {
+    &:hover,
+    &:active,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin link-v {
+    &,
+    &:visited {
+        @content;
+    }
+}
+
+@mixin no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+@mixin select {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+}
+
+@mixin full {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@mixin full-abs {
+    position: absolute;
+    @include full;
+}
+
+@mixin full-fix {
+    position: fixed;
+    @include full;
+}
+
+@mixin flc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin hide-play() {
+    &::-webkit-media-controls-panel {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+
+    &::--webkit-media-controls-play-button {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+
+    &::-webkit-media-controls-start-playback-button {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+}
+
+@mixin ios-border-radius-null {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+@mixin float-clear {
+    &:after {
+        content: "";
+
+        clear: both;
+
+        display: block;
+        margin-top: -1px;
+
+        width: 100%;
+        height: 1px;
+    }
+}
+
+@mixin ib {
+    display: inline-block;
+    vertical-align: top;
+}
+
+@mixin reset-button() {
+    @include ib;
+
+    padding: 0;
+    margin: 0;
+    border: none;
+
+    font-family: inherit;
+    font-size: inherit;
+
+    background: transparent;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+}
